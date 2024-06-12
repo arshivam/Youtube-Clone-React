@@ -10,11 +10,15 @@ import { MdOutlineFileDownload } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { IoSend } from "react-icons/io5";
 import LiveChat from "./LiveChat";
+import { useDispatch } from "react-redux";
+import { setMessasge } from "../utils/chatSlice";
 
 function Watch() {
   const [singlevideo, setSingleVideo] = useState(null);
+  const [input , setInput] = useState("");
   let [searchParams, setSearchParams] = useSearchParams();
   let videoId = searchParams.get("v");
+  const dispatch = useDispatch();
 
   const fetchVideoById = async () => {
     try {
@@ -30,6 +34,14 @@ function Watch() {
   useEffect(() => {
     fetchVideoById();
   }, []);
+
+  const sendMessage = () =>{
+    dispatch(setMessasge({
+        name:"shivam armarkar",
+        message: input
+    }))
+    setInput("")
+  }
 
   return (
     <div className="ml-4 flex w-full">
@@ -93,8 +105,8 @@ function Watch() {
           <h1>Top Chat</h1>
           <BsThreeDotsVertical />
         </div>
-        
-        <div className="overflow-y-auto h-[28rem] mt-2">
+
+        <div className="overflow-y-auto h-[28rem] mt-2 flex flex-col-reverse">
           <LiveChat />
         </div>
 
@@ -111,9 +123,11 @@ function Watch() {
               type="text"
               name=""
               id=""
+              value={input}
               placeholder="Send message ..."
+              onChange={(e)=>{setInput(e.target.value)}}
             />
-            <IoSend className="cursor-pointer" size={20} />
+            <IoSend className="cursor-pointer" onClick={sendMessage} size={20} />
           </div>
         </div>
       </div>

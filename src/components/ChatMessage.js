@@ -1,6 +1,6 @@
 import React from 'react'
 import Avatar from 'react-avatar'
-function ChatMessage() {
+function ChatMessage({item}) {
   return (
     <div className='mt-3 flex items-center'>
         <div>
@@ -12,8 +12,8 @@ function ChatMessage() {
             />
         </div>
         <div className='flex items-center'>
-            <h1 className='font-bold text-sm ml-2'>Prommer name</h1>
-            <p className='text-sm ml-2'>comment  message</p>
+            <h1 className='font-bold text-sm ml-2'>{item.name}</h1>
+            <p className='text-sm ml-2'>{item.message}</p>
         </div>
     </div>
   )
