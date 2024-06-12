@@ -1,15 +1,17 @@
 import axios from "axios";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Avatar from "react-avatar";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { API_KEY } from "../constants/youtube";
 
 function VideoCard({item}) {
 
+  const [avatar, setAvatar] = useState('')
+
     const fetchYtChannelByID = async()=>{
         try {
-            const res = await axios.get(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${item.snippet.channelID}&key=${API_KEY}`) 
-           // console.log(res.data);
+            const res = await axios.get(`https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CcontentDetails%2Cstatistics&id=${item.snippet.channelId}&key=${API_KEY}`) 
+           setAvatar(res?.data?.items[0]?.snippet?.thumbnails?.medium?.url)
         } catch (error) {
             console.log(error);
         }
@@ -29,13 +31,13 @@ function VideoCard({item}) {
         alt="ythumbnail"
       />
       <div className="flex  justify-between gap-4 ">
-        <div className="flex  gap-2">
+        <div className="flex">
           <Avatar
-            src="https://pics.craiyon.com/2023-07-15/dc2ec5a571974417a5551420a4fb0587.webp"
-            size={30}
+            src={avatar}
+            size={50}
             round={true}
           />
-          <div>
+          <div className="ml-2">
             <h2 className="font-bold ">{item.snippet.title}</h2>
             <p className="text-sm text-gray-500">{item.snippet.channelTitle}</p>
             <p className="text-sm text-gray-500">4k views . 4 month ago</p>
