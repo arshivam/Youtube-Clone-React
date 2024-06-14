@@ -6,6 +6,7 @@ const appSlice = createSlice({
     open: true,
     videos: [],
     category : "All",
+    suggestions : [],
   },
   reducers: {
     //actions
@@ -18,8 +19,11 @@ const appSlice = createSlice({
     setCategory: (state, action) =>{
       state.category = action.payload;
     },
+    setSuggestions: (state, action) =>{
+      state.suggestions = action.payload;
+    },
   },
 });
 
-export const { toggleSidebar, setVideos, setCategory } = appSlice.actions;
+export const { toggleSidebar, setVideos, setCategory, setSuggestions } = appSlice.actions;
 export default appSlice.reducer;
