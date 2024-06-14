@@ -1,17 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import { TbVideoPlus } from "react-icons/tb";
 import Avatar from 'react-avatar';
 import { GrSearch } from "react-icons/gr";
 import { useDispatch } from 'react-redux'
-import { toggleSidebar } from "../utils/appSlice";
+import { setCategory, toggleSidebar } from "../utils/appSlice";
 
 function Navbar() {
+  const [input , setInput] = useState("")
   const dispatch = useDispatch()
   
   const handleToggle = () =>{
     dispatch(toggleSidebar())
+  }
+
+  const handleSearchInput = (e) =>{
+      console.log(e.target.value);
+      setInput(e?.target?.value)
+  }
+
+  const handleSearchClick = () =>{
+    console.log("search clicked");
+    dispatch(setCategory(input))
+    setInput("")
   }
 
   return (
@@ -34,9 +46,11 @@ function Navbar() {
             name="searchinput"
             id="searchinput"
             placeholder="search anything"
+            value={input}
+            onChange={(e)=>{handleSearchInput(e)}}
           />
         </div>
-        <button type="button" className="border border-gray-300 rounded-r-full py-1 px-4"><GrSearch size={23}/></button>
+        <button onClick={()=>{handleSearchClick()}} type="button" className="border border-gray-300 rounded-r-full py-1 px-4"><GrSearch size={23}/></button>
       </div>
       <div className="flex items-center gap-3">
         <TbVideoPlus size={30} />
